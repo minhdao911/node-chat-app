@@ -10,16 +10,16 @@ socket.on("disconnect", () => {
 
 socket.on('newMess', (mess) => {
   console.log(mess);
-  $("#messages").append(
+  jQuery("#messages").append(
     `
       <li>${mess.from}: ${mess.text}</li>
     `
   );
 });
 
-$("#message-form").on("submit", function(e){
+jQuery("#message-form").on("submit", function(e){
   e.preventDefault();
-  var input = $('input[name=message]');
+  var input = jQuery('input[name=message]');
   socket.emit('createMess',{
     from: 'User',
     text: input.val()
