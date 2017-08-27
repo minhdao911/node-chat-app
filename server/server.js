@@ -15,9 +15,18 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
   console.log("New user connected");
 
+  socket.on('createMess', (mess) => {
+    console.log(mess);
+    io.emit('newMess', {
+      from: mess.from,
+      text: mess.text,
+      createAt: new Date().getTime()
+    });
+  });
+
   socket.on('disconnect', () => {
     console.log("New user disconnected");
-  })
+  });
 });
 
 server.listen(port, () => {
