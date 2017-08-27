@@ -3,6 +3,7 @@ const http = require("http");
 const path = require("path");
 const socketIO = require("socket.io");
 
+const {generateMess} = require("./utils/message");
 const publicPath = path.join(__dirname, "../public");
 const port = process.env.PORT || 3000;
 
@@ -15,25 +16,13 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
   console.log("New user connected");
 
-  socket.emit('newMess', {
-    from: 'Admin',
-    text: 'Welcome to the chat app',
-    createAt: new Date().getTime()
-  });
+  socket.emit('newMess', generateMess('Admin', 'Welcome to the app chat'));
 
-  socket.broadcast.emit('newMess', {
-    from: 'Admin',
-    text: "new user joined",
-    createAt: new Date().getTime()
-  });
+  socket.broadcast.emit('newMess', generateMess('Admin', 'New user joined'));
 
   socket.on('createMess', (mess) => {
     console.log(mess);
-    io.emit('newMess', {
-      from: mess.from,
-      text: mess.text,
-      createAt: new Date().getTime()
-    });
+    io.emit('newMess', generateMess(mess.from, mess.text));
   });
 
   socket.on('disconnect', () => {
