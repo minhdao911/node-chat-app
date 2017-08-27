@@ -6,4 +6,12 @@ var generateMess = (from, text) => {
   };
 };
 
-module.exports = {generateMess};
+var generateLocationMess = (from, latitude, longitude) => {
+  return {
+    from: from,
+    url: `https://www.google.fi/maps/?q=${latitude},${longitude}`,
+    createdAt: new Date().getTime()
+  };
+};
+
+module.exports = {generateMess, generateLocationMess};

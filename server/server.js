@@ -3,7 +3,7 @@ const http = require("http");
 const path = require("path");
 const socketIO = require("socket.io");
 
-const {generateMess} = require("./utils/message");
+const {generateMess, generateLocationMess} = require("./utils/message");
 const publicPath = path.join(__dirname, "../public");
 const port = process.env.PORT || 3000;
 
@@ -24,6 +24,10 @@ io.on('connection', (socket) => {
     console.log(mess);
     io.emit('newMess', generateMess(mess.from, mess.text));
     callback('This is from the server');
+  });
+
+  socket.on('createLocationMess', (mess) => {
+    io.emit('newLocationMess', generateLocationMess(mess.from, mess.latitude, mess.longitude));
   });
 
   socket.on('disconnect', () => {
