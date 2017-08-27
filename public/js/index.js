@@ -12,7 +12,7 @@ socket.on('newMess', (mess) => {
   console.log(mess);
   $("#messages").append(
     `
-      <li>${mess.from}: ${mess.text}</li>
+      <li>${mess.from} ${moment(mess.createdAt).format("h:mm a")}: ${mess.text}</li>
     `
   );
 });
@@ -20,7 +20,7 @@ socket.on('newMess', (mess) => {
 socket.on('newLocationMess', (mess) => {
   $("#messages").append(
     `
-      <li>${mess.from}: <a target="_blank" href="${mess.url}">My current location</a></li>
+      <li>${mess.from} ${moment(mess.createdAt).format("h:mm a")}: <a target="_blank" href="${mess.url}">My current location</a></li>
     `
   );
 })
@@ -32,23 +32,26 @@ $("#message-form").on("submit", function(e){
     from: 'User',
     text: input.val()
   }, function(data){
-
+    input.val("");
   });
-  input.val("");
 });
 
-$("#send-location").on('click', function(){
+var locButton = $("#send-location");
+locButton.on('click', function(){
   if(!navigator.geolocation){
     return alert("Geolocation not supported by your browser");
   }
 
+  locButton.attr("disabled", 'disabled').text('Sending Location...');
+
   navigator.geolocation.getCurrentPosition(function(position){
-    console.log(position);
+    locButton.removeAttr('disabled').text('Send Location');
     socket.emit("createLocationMess", {
       from: 'User',
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
     }, function(){
+      locButton.removeAttr('disabled').text('Send Location');
       alert('Unable to fetch location');
     });
   });
