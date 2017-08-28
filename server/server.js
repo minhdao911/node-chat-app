@@ -21,7 +21,6 @@ io.on('connection', (socket) => {
   socket.broadcast.emit('newMess', generateMess('Admin', 'New user joined'));
 
   socket.on('createMess', (mess, callback) => {
-    console.log(mess);
     io.emit('newMess', generateMess(mess.from, mess.text));
     callback('This is from the server');
   });
