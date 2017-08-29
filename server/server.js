@@ -42,12 +42,19 @@ io.on('connection', (socket) => {
   })
 
   socket.on('createMess', (mess, callback) => {
-    io.emit('newMess', generateMess(mess.from, mess.text));
-    callback('This is from the server');
+    var user = users.getUser(socket.id);
+    if(user && isRealString(mess.text)){
+      io.to(user.room).emit('newMess', generateMess(user.name, mess.text));
+    }
+
+    callback();
   });
 
   socket.on('createLocationMess', (mess) => {
-    io.emit('newLocationMess', generateLocationMess(mess.from, mess.latitude, mess.longitude));
+    var user = users.getUser(socket.id);
+    if(user){
+      io.to(user.room).emit('newLocationMess', generateMess(user.name, mess.latitude, mess.longitude));
+    }
   });
 
   socket.on('disconnect', () => {

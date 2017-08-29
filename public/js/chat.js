@@ -80,7 +80,6 @@ $("#message-form").on("submit", function(e){
   e.preventDefault();
   var input = $('input[name=message]');
   socket.emit('createMess',{
-    from: 'User',
     text: input.val()
   }, function(data){
     input.val("");
@@ -98,7 +97,6 @@ locButton.on('click', function(){
   navigator.geolocation.getCurrentPosition(function(position){
     locButton.removeAttr('disabled').text('Send Location');
     socket.emit("createLocationMess", {
-      from: 'User',
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
     }, function(){
