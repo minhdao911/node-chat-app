@@ -60,7 +60,7 @@ button:disabled {
   padding: 0px 20px;
   margin: auto;
   margin-top: 150px;
-  width: 350px;
+  width: 300px;
 }
 
 .center-buttons {
@@ -232,5 +232,14 @@ button:disabled {
 
   .chat__footer button {
     margin-right: 0px;
+  }
+  a {
+    display: block;
+    margin: auto;
+    margin-bottom: 10px;
+    width: 300px;
+  }
+  .center-buttons{
+    text-align: center;
   }
 }
