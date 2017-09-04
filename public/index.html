@@ -18,13 +18,30 @@
         </div>
         <div class="form-field">
           <label>Room Name</label>
-          <input type="text" name="room" placeholder="Room name">
+          <input id="room-input" type="text" name="room" placeholder="Room name" autocomplete='off'>
+        </div>
+        <div class="form-field">
+          <label>Active room</label>
+          <div id="room-list">
+
+          </div>
         </div>
         <div class="form-field">
           <button type="submit">Join</button>
         </div>
       </form>
     </div>
+    <div class="center-buttons">
+      <a href="/chat.html?name=You&room=simsimi">Start a chat with Simsimi</a>
+      <button type="button" name="random">Join a random room</button>
+    </div>
 
+
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/index.js"></script>
   </body>
 </html>

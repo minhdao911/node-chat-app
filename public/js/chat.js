@@ -17,14 +17,19 @@ function scrollToBottom(){
 
 socket.on("connect", () => {
   var params = jQuery.deparam(window.location.search);
-  socket.emit('join', params, function(err){
-    if(err){
-      alert(err);
-      window.location.href = '/';
-    }else{
-      console.log('No error');
-    }
-  });
+  if(params.room !== 'simsimi'){
+    socket.emit('join', params, function(err){
+      if(err){
+        alert(err);
+        window.location.href = '/';
+      }else{
+        console.log('No error');
+      }
+    });
+  }else{
+    socket.emit('simsimi', params);
+  }
+
 });
 
 socket.on("disconnect", () => {
