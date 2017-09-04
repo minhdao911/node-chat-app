@@ -242,4 +242,7 @@ button:disabled {
   .center-buttons{
     text-align: center;
   }
+  #room-list-div {
+    width: 258px;
+  }
 }
