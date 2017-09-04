@@ -2,6 +2,7 @@ const express = require("express");
 const http = require("http");
 const path = require("path");
 const socketIO = require("socket.io");
+const request = require('request');
 
 const {generateMess, generateLocationMess} = require("./utils/message");
 const {isRealString} = require('./utils/validation');
@@ -16,6 +17,8 @@ var server = http.createServer(app);
 var io = socketIO(server);
 var users = new User();
 var rooms = new Room();
+
+var url = "http://sandbox.api.simsimi.com/request.p?key=c6cc73ca-c702-4661-bfe6-e9ce6eea06a6&lc=vn&ft=0.8&text=";
 
 app.use(express.static(publicPath));
 
@@ -62,6 +65,13 @@ io.on('connection', (socket) => {
     }
     if(!user){
       socket.emit('newMess', generateMess('You', mess.text));
+      url = url + encodeURIComponent(mess.text);
+      request(url, function(err, response, body){
+        if(!err && response.statusCode == 200){
+          var result = JSON.parse(body);
+          socket.emit('newMess', generateMess('Simsimi', result.response));
+        }
+      });
     }
 
     callback();
