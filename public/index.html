@@ -7,34 +7,54 @@
     <link rel="stylesheet" href="/css/styles.css">
   </head>
   <body class="centered-form">
-    <div class="centered-form__form">
+    <div class="container">
+      <div class="centered-form__form">
+        <form action="/chat.html">
+          <div class="form-field">
+            <h3>Join a chat</h3>
+          </div>
+          <div class="form-field">
+            <label>Display Name</label>
+            <input type="text" name="name" placeholder="Display name" autofocus>
+          </div>
+          <div class="form-field">
+            <label>Room Name</label>
+            <input id="room-input" type="text" name="room" placeholder="Room name" autocomplete='off'>
+          </div>
+          <div class="form-field" id="room-list-div">
+            <label>Active room</label>
+            <div id="room-list">
+
+            </div>
+          </div>
+          <div class="form-field">
+            <button type="submit">Join</button>
+          </div>
+        </form>
+      </div>
+      <div class="center-buttons">
+        <a href="/chat.html?name=You&room=simsimi">Start a chat with Simsimi</a>
+        <a id="random-room-btn">Join a random room</a>
+      </div>
+    </div>
+
+    <div class="centered-form__form" id="sub-form">
       <form action="/chat.html">
         <div class="form-field">
-          <h3>Join a chat</h3>
-        </div>
-        <div class="form-field">
           <label>Display Name</label>
-          <input type="text" name="name" placeholder="Display name" autofocus>
+          <input type="text" name="name" placeholder="Display name" autofocus required>
         </div>
         <div class="form-field">
           <label>Room Name</label>
-          <input id="room-input" type="text" name="room" placeholder="Room name" autocomplete='off'>
-        </div>
-        <div class="form-field" id="room-list-div">
-          <label>Active room</label>
-          <div id="room-list">
-
-          </div>
+          <input id="sub-form_room-input" type="text" name="room" placeholder="Room name" autocomplete='off'>
         </div>
         <div class="form-field">
-          <button type="submit">Join</button>
+          <button id="cancel-btn" class="sub-form_btn">Cancel</button>
+          <button type="submit" class="sub-form_btn">Join</button>
         </div>
       </form>
     </div>
-    <div class="center-buttons">
-      <a href="/chat.html?name=You&room=simsimi">Start a chat with Simsimi</a>
-      <a href="#">Join a random room</a>
-    </div>
+
 
 
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>

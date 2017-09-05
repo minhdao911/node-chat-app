@@ -8,7 +8,19 @@ socket.on('updateRoomList', (rooms) => {
     ul.append($('<li></li>').text(room));
   });
   roomList.html(ul);
+
+  if(rooms.length>0){
+    $('#random-room-btn').on('click', function(){
+      var randomNum = Math.floor(Math.random()*rooms.length);
+      console.log(randomNum);
+      var randomRoom = rooms[randomNum];
+      $('#sub-form').css('display', 'block');
+      $('.container').addClass('dim');
+      $('#sub-form_room-input').val(randomRoom);
+    });
+  }
 });
+
 
 $('#room-list').on('click', 'li', function(){
   var room = $(this).text();
@@ -20,6 +32,11 @@ $('body').on('click', function(e){
   if(e.target.id !== "room-list" && e.target.id !== "room-input"){
     $('.form-field:nth-child(4)').css("display", "none");
   }
+});
+
+$('#cancel-btn').on('click', function(){
+  $('#sub-form').css("display", "none");
+  $('.container').removeClass('dim');
 });
 
 $('input[name=room]').on('focus', function(){
@@ -34,3 +51,9 @@ roomInput.keydown(function(){
     $('.form-field:nth-child(4)').css("display", "block");
   }
 });
+
+// $('#random-room-btn').on('click', function(){
+//   $('#sub-form').css('display', 'block');
+//   $('.container').addClass('dim');
+//   $('#sub-form_room-input').val(randomRoom);
+// });

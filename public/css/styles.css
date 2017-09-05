@@ -120,6 +120,31 @@ button:disabled {
   cursor: pointer;
 }
 
+#sub-form {
+  position: absolute;
+  left: 50%;
+  margin-left: -150px;
+  margin-top: 0;
+  top: 175px;
+  padding-bottom: 20px;
+  display: none;
+  /*background: url('semitransparent1x1.png');
+    background: rgba(0, 0, 0, 0.8);
+
+    z-index:100;*/
+}
+
+.sub-form_btn {
+  width: 50%;
+  float: left;
+}
+
+.dim {
+  /*background: url('semitransparent1x1.png');
+  background: rgba(0, 0, 0, 0.8);*/
+  opacity: 0.2;
+}
+
 .chat {
   display: flex;
 }
@@ -233,16 +258,20 @@ button:disabled {
   .chat__footer button {
     margin-right: 0px;
   }
+
   a {
     display: block;
     margin: auto;
     margin-bottom: 10px;
     width: 300px;
   }
+
   .center-buttons{
     text-align: center;
   }
+
   #room-list-div {
     width: 258px;
   }
+  
 }
