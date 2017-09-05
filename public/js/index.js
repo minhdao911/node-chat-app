@@ -9,16 +9,18 @@ socket.on('updateRoomList', (rooms) => {
   });
   roomList.html(ul);
 
-  if(rooms.length>0){
-    $('#random-room-btn').on('click', function(){
-      var randomNum = Math.floor(Math.random()*rooms.length);
-      console.log(randomNum);
-      var randomRoom = rooms[randomNum];
-      $('#sub-form').css('display', 'block');
-      $('.container').addClass('dim');
-      $('#sub-form_room-input').val(randomRoom);
-    });
-  }
+  $('#random-room-btn').on('click', function(){
+      if(rooms.length>0){
+        var randomNum = Math.floor(Math.random()*rooms.length);
+        console.log(randomNum);
+        var randomRoom = rooms[randomNum];
+        $('#sub-form').css('display', 'block');
+        $('.container').addClass('dim');
+        $('#sub-form_room-input').val(randomRoom);
+    }else{
+      alert('No active room at the moment!');
+    }
+  });
 });
 
 
