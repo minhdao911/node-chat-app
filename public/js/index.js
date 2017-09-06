@@ -1,28 +1,28 @@
 var socket = io();
 
+var roomsList = [];
+
 socket.on('updateRoomList', (rooms) => {
-  console.log(rooms);
+  roomsList = [];
   var ul = $('<ul></ul>');
-  var roomList = $('#room-list');
   rooms.forEach(function(room){
     ul.append($('<li></li>').text(room));
+    roomsList.push(room);
   });
-  roomList.html(ul);
-
-  $('#random-room-btn').on('click', function(){
-      if(rooms.length>0){
-        var randomNum = Math.floor(Math.random()*rooms.length);
-        console.log(randomNum);
-        var randomRoom = rooms[randomNum];
-        $('#sub-form').css('display', 'block');
-        $('.container').addClass('dim');
-        $('#sub-form_room-input').val(randomRoom);
-    }else{
-      alert('No active room at the moment!');
-    }
-  });
+  $('#room-list').html(ul);
 });
 
+$('#random-room-btn').on('click', function(){
+  if(roomsList.length>0){
+    var randomNum = Math.floor(Math.random()*roomsList.length);
+    var randomRoom = roomsList[randomNum];
+    $('#sub-form').css('display', 'block');
+    $('.container').addClass('dim');
+    $('#sub-form_room-input').val(randomRoom);
+  }else{
+    alert('No active room at the moment');
+  }
+});
 
 $('#room-list').on('click', 'li', function(){
   var room = $(this).text();

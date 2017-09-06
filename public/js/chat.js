@@ -63,6 +63,16 @@ socket.on('newMess', (mess) => {
   // );
 });
 
+socket.on('newNoti', (noti) => {
+  var template = $('#message-notification').html();
+  var newNoti = noti.text;
+  var html = Mustache.render(template, {
+    noti: newNoti
+  });
+  $("#messages").append(html);
+  scrollToBottom();
+});
+
 socket.on('newLocationMess', (mess) => {
   var formattedTime = moment(mess.createdAt).format("h:mm a");
   var template = $("#message-location-template").html();

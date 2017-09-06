@@ -17,7 +17,7 @@ h3 {
   font-size: 1.5rem;
 }
 
-button, a {
+button, .bottom-btn {
   border: none;
   background: #265f82;
   color: white;
@@ -27,7 +27,7 @@ button, a {
   text-decoration: none;
 }
 
-button:hover, a:hover {
+button:hover, .bottom-btn:hover {
   border: none;
   background: #1F4C69;
   color: white;
@@ -96,7 +96,7 @@ button:disabled {
   padding: 10px;
   border: 1px solid #e1e1e1;
   position: absolute;
-  width: 308px;
+  width: 259px;
   background-color: white;
   display: none;
   max-height: 200px;
@@ -238,6 +238,12 @@ button:disabled {
   color: #999;
 }
 
+.noti {
+  text-align: center;
+  color: #bfbfbf;
+  font-style: oblique;
+}
+
 @media (max-width: 600px) {
   * {
     font-size: 1rem;
@@ -273,5 +279,5 @@ button:disabled {
   #room-list-div {
     width: 258px;
   }
-  
+
 }

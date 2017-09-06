@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
     // console.log(users.getUserList(params.room));
 
     socket.emit('newMess', generateMess('Admin', 'Welcome to the app chat'));
-    socket.broadcast.to(params.room).emit('newMess', generateMess('Admin', `${params.name} joined`));
+    socket.broadcast.to(params.room).emit('newNoti', generateMess('Admin', `${params.name} joined`));
 
     callback();
   });
@@ -89,7 +89,7 @@ io.on('connection', (socket) => {
     var user = users.removeUser(socket.id);
     if(user){
       io.to(user.room).emit('updateUserList', users.getUserList(user.room));
-      io.to(user.room).emit('newMess', generateMess('Admin', `${user.name} has left the room`));
+      io.to(user.room).emit('newNoti', generateMess('Admin', `${user.name} has left the room`));
       if(users.getUserList(user.room).length === 0){
         rooms.removeRoom(user.room);
         console.log(rooms.roomList);
