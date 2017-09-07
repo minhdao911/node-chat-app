@@ -46,7 +46,6 @@ io.on('connection', (socket) => {
     users.addUser(socket.id, params.name, params.room);
 
     io.to(params.room).emit('updateUserList', users.getUserList(params.room));
-    // console.log(users.getUserList(params.room));
 
     socket.emit('newMess', generateMess('Admin', 'Welcome to the app chat'));
     socket.broadcast.to(params.room).emit('newNoti', generateMess('Admin', `${params.name} joined`));
@@ -61,19 +60,13 @@ io.on('connection', (socket) => {
   // when the client emits 'typing', we broadcast it to others
   socket.on('typing', function (data) {
     var user = users.getUser(socket.id);
-    socket.broadcast.to(user.room).emit('isTyping', {
-      username: user.name,
-      typing: data
-    });
+    if(user){
+      socket.broadcast.to(user.room).emit('isTyping', {
+        username: user.name,
+        typing: data
+      });
+    }
   });
-
-  // // when the client emits 'stop typing', we broadcast it to others
-  // socket.on('stop typing', function () {
-  //   var user = users.getUser(socket.id);
-  //   socket.broadcast.emit('stop typing', {
-  //     username: user.name
-  //   });
-  // });
 
   socket.on('createMess', (mess, callback) => {
     var user = users.getUser(socket.id);
