@@ -1,5 +1,26 @@
 var socket = io();
 
+var typing = false;
+var timeout = undefined;
+var $currentInput = $('input[name=message]');
+
+function timeoutFunction(){
+  typing = false;
+  socket.emit("typing", false);
+}
+
+$currentInput.keydown(function(e){
+    if (e.which !== 13) {
+      if (typing === false && $currentInput.is(":focus")) {
+        typing = true;
+        socket.emit("typing", true);
+      } else {
+        clearTimeout(timeout);
+        timeout = setTimeout(timeoutFunction, 1000);
+      }
+    }
+  });
+
 function scrollToBottom(){
   var messages = $("#messages");
   var newMessages = messages.children('li:last-child');
@@ -44,6 +65,24 @@ socket.on('updateUserList', (users) => {
   $('#users').html(ol);
 });
 
+socket.on("isTyping", function(data) {
+    if (data.typing) {
+      if ($("#"+data.username+"").length === 0) {
+        $("#messages").append(`
+            <li id="${data.username}" class="message">
+              <div class="message__title">
+                <h4>${data.username}</h4>
+                <span class="isTyping">is typing</span>
+              </div>
+            </li>
+          `);
+        timeout = setTimeout(timeoutFunction, 1000);
+      }
+    } else {
+      $("#"+data.username+"").remove();
+    }
+  });
+
 socket.on('newMess', (mess) => {
   var formattedTime = moment(mess.createdAt).format("h:mm a");
   var template = $("#message-template").html();
@@ -55,12 +94,10 @@ socket.on('newMess', (mess) => {
 
   $("#messages").append(html);
   scrollToBottom();
-  // console.log(mess);
-  // $("#messages").append(
-  //   `
-  //     <li>${mess.from} ${moment(mess.createdAt).format("h:mm a")}: ${mess.text}</li>
-  //   `
-  // );
+
+  $("#"+mess.from+"").remove();
+   clearTimeout(timeout);
+   timeout = setTimeout(timeoutFunction, 0);
 });
 
 socket.on('newNoti', (noti) => {
@@ -84,12 +121,7 @@ socket.on('newLocationMess', (mess) => {
 
   $('#messages').append(html);
   scrollToBottom();
-  // $("#messages").append(
-  //   `
-  //     <li>${mess.from} ${moment(mess.createdAt).format("h:mm a")}: <a target="_blank" href="${mess.url}">My current location</a></li>
-  //   `
-  // );
-})
+});
 
 $("#message-form").on("submit", function(e){
   e.preventDefault();

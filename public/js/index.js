@@ -53,9 +53,3 @@ roomInput.keydown(function(){
     $('.form-field:nth-child(4)').css("display", "block");
   }
 });
-
-// $('#random-room-btn').on('click', function(){
-//   $('#sub-form').css('display', 'block');
-//   $('.container').addClass('dim');
-//   $('#sub-form_room-input').val(randomRoom);
-// });

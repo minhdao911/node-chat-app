@@ -58,6 +58,23 @@ io.on('connection', (socket) => {
     socket.emit('newMess', generateMess('Admin', 'Welcome, you can now start talking with Simsimi. Have fun!'));
   });
 
+  // when the client emits 'typing', we broadcast it to others
+  socket.on('typing', function (data) {
+    var user = users.getUser(socket.id);
+    socket.broadcast.to(user.room).emit('isTyping', {
+      username: user.name,
+      typing: data
+    });
+  });
+
+  // // when the client emits 'stop typing', we broadcast it to others
+  // socket.on('stop typing', function () {
+  //   var user = users.getUser(socket.id);
+  //   socket.broadcast.emit('stop typing', {
+  //     username: user.name
+  //   });
+  // });
+
   socket.on('createMess', (mess, callback) => {
     var user = users.getUser(socket.id);
     if(user && isRealString(mess.text)){
